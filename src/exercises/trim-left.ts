@@ -6,7 +6,8 @@ import { Equal, Expect } from 'type-testing';
 // Update `TrimLeft` which takes an exact string type and returns a new string
 // with the whitespace beginning removed.
 
-type TrimLeft<TStr> = unknown;
+type whitespace = ' ' | '\t' | '\n';
+type TrimLeft<TStr> = TStr extends `${whitespace}${infer Rest}` ? TrimLeft<Rest> : TStr;
 
 type cases = [
   Expect<Equal<TrimLeft<'  Hello World  '>, 'Hello World  '>>,

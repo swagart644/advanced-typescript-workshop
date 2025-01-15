@@ -25,7 +25,11 @@ type ControlsMap = {
   p: 'pointer';
 };
 
-type ParsePrintFormat<S, R> = unknown;
+type ParsePrintFormat<S extends string, R extends string[] = []> = S extends `${string}%${infer Control}${infer Rest}`
+  ? Control extends keyof ControlsMap
+    ? ParsePrintFormat<Rest, [...R, ControlsMap[Control]]>
+    : ParsePrintFormat<Rest, R>
+  : R;
 
 type cases = [
   Expect<Equal<ParsePrintFormat<''>, []>>,

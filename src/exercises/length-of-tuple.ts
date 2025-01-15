@@ -8,6 +8,10 @@ import { Equal, Expect } from 'type-testing';
 type Tesla = ['tesla', 'model 3', 'model X', 'model Y'];
 type SpaceX = ['FALCON 9', 'FALCON HEAVY', 'DRAGON', 'STARSHIP', 'HUMAN SPACEFLIGHT'];
 
-type Length<TArray> = unknown;
+type Length<TArray extends any[]> = TArray extends []
+  ? 0 // If the tuple is empty, return 0
+  : TArray extends [any, ...infer Rest] // else if it has things infer type and recurse
+    ? TArray['length'] // in that case you know it's got something so get length which is built in
+    : never; // something fucked happened
 
 type cases = [Expect<Equal<Length<Tesla>, 4>>, Expect<Equal<Length<SpaceX>, 5>>];

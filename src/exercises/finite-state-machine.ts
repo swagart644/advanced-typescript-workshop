@@ -8,7 +8,7 @@
 // https://www.typescriptlang.org/docs/handbook/utility-types.html#noinfertype
 
 interface FSMConfig<TState extends string> {
-  initial: TState;
+  initial: NoInfer<TState>;
   states: Record<
     TState,
     {

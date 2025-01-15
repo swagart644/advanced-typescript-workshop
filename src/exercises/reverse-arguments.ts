@@ -12,7 +12,16 @@ import { Expect, Equal } from 'type-testing';
 // //   ^? (arg0: boolean, arg1: number, arg2: string) => void
 // ```
 
-type FlipArguments<T> = unknown;
+type ReverseArray<Array, Reversed extends any[] = []> = Array extends [infer First, ...infer Rest]
+  ? ReverseArray<Rest, [First, ...Reversed]>
+  : Reversed;
+//^?
+type Check = ReverseArray<[1, 2, 3]>;
+//   ^?
+
+type FlipArguments<T extends (...args: any) => any> = T extends (...args: infer Args) => infer Return
+  ? (...reversed: ReverseArray<Args>) => Return
+  : never;
 
 type cases = [
   Expect<Equal<FlipArguments<() => boolean>, () => boolean>>,

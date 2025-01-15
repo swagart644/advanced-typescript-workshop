@@ -3,7 +3,7 @@
 
 // Update `makeEnum` so that the argument cannot be an empty array.
 
-type NonEmptyArray<T> = unknown;
+type NonEmptyArray<T> = [T, ...Array<T>];
 
 export const makeEnum = (values: NonEmptyArray<string>) => {};
 

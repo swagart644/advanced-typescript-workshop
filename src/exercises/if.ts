@@ -7,7 +7,7 @@ import { Expect, Equal } from 'type-testing';
 // T, and a falsy value F. C is expected to be either true or false while T and
 // F can be any type.
 
-type If<C, T, F> = unknown;
+type If<C extends boolean, T, F> = C extends true ? T : F;
 
 type cases = [
   Expect<Equal<If<true, 'a', 'b'>, 'a'>>,

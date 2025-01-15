@@ -5,7 +5,7 @@ import { Equal, Expect } from 'type-testing';
 
 // Update `GetDataValue` so that it returns the type of the `data` property.
 
-type GetDataValue<T> = unknown;
+type GetDataValue<T> = T extends { data: infer D } ? D : never;
 
 type cases = [
   Expect<Equal<GetDataValue<{ data: 'hello' }>, 'hello'>>,

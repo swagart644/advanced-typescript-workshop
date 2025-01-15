@@ -9,6 +9,6 @@ import { Expect, Equal } from 'type-testing';
 type Fruit = 'apple' | 'banana' | 'orange';
 type Citrus = 'orange' | 'lemon';
 
-type CommonFruits = unknown;
+type CommonFruits = Fruit & Citrus;
 
 type cases = [Expect<Equal<CommonFruits, 'orange'>>];
